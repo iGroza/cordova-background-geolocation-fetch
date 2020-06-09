@@ -1,0 +1,24 @@
+{
+  "_id": "cordova-background-geolocation-fetch@0.0.4",
+  "author": {
+    "name": "iGroza"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-background-geolocation-fetch",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "background",
+    "geolocation",
+    "fetch",
+    "ios",
+    "android"
+  ],
+  "license": "ISC",
+  "name": "cordova-background-geolocation-fetch",
+  "version": "0.0.4"
+}

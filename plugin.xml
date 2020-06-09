@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-background-geolocation-fetch" version="0.0.1" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>CordovaBackgroundGeolocationFetch</name>
+    <js-module name="CordovaBackgroundGeolocationFetch" src="www/CordovaBackgroundGeolocationFetch.js">
+        <clobbers target="cordova.plugins.GeolocationFetch" />
+    </js-module>
+
+    <!-- IOS IMPLEMENTATION -->
+    <platform name="ios">
+        <preference name="DESCRIPTION"/>
+
+        <config-file parent="NSLocationAlwaysAndWhenInUseUsageDescription" target="*-Info.plist">
+            <string>$DESCRIPTION</string>
+        </config-file>
+        <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
+            <string>$DESCRIPTION</string>
+        </config-file>
+        <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
+            <string>$DESCRIPTION</string>
+        </config-file>
+        <config-file parent="NSMotionUsageDescription" target="*-Info.plist">
+            <string>$DESCRIPTION</string>
+        </config-file>
+        <config-file parent="UIBackgroundModes" target="*-Info.plist">
+            <array>
+                <string>fetch</string>
+                <string>location</string>
+                <string>processing</string>
+            </array>
+        </config-file>
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="CDVBackgroundGeolocationFetch">
+                <param name="ios-package" value="CDVBackgroundGeolocationFetch" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/ios/CDVBackgroundGeolocationFetch.swift" />
+        <source-file src="src/ios/HTTPLocationManager.swift" />
+        <source-file src="src/ios/LocationConfig.swift" />
+        <source-file src="src/ios/LocationManager.swift" />
+
+        <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
+        <dependency id="cordova-plugin-device" version="2.0.3"/>
+    </platform>
+
+</plugin>

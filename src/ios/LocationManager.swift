@@ -37,6 +37,10 @@ class LocationManager: NSObject {
     func stopTracking(){
         self.mLocationManager!.stopUpdatingLocation()
     }
+    
+    func postCurrentLocation() {
+        HTTPLocationManager.postLocation(location: (mLocationManager?.location)!)
+    }
 }
 
 extension LocationManager: CLLocationManagerDelegate {

@@ -9,7 +9,7 @@ import Foundation
 
 @objc(CDVBackgroundGeolocationFetch) class CDVBackgroundGeolocationFetch : CDVPlugin {
     var locationManager: LocationManager? = LocationManager()
-       
+    
     @objc(ready:)
     func ready(command: CDVInvokedUrlCommand){
         LocationConfig.shared.update(command)
@@ -40,5 +40,12 @@ import Foundation
     func stopTracking(command: CDVInvokedUrlCommand) {
         locationManager!.startTracking()
     }
+    
+    @objc(postCurrentLocation:)
+    func postCurrentLocation(command: CDVInvokedUrlCommand?) {
+        if self.locationManager == nil {
+            self.locationManager  = LocationManager()
+        }
+        locationManager!.postCurrentLocation()
+    }
 }
-

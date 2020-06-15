@@ -23,7 +23,7 @@ struct LocationConfig {
         LocationConfig.shared.url = jsonData["url"] as! String
         LocationConfig.shared.uuid = jsonData["uuid"] as! String
         LocationConfig.shared.extras = jsonData["extras"] as? NSDictionary
-        LocationConfig.shared.LOCATION_UPDATES_TIME = jsonData["LOCATION_UPDATES_TIME"] as? Double ?? 1.0
-        LocationConfig.shared.LOCATION_DISTANSE_FILTER = jsonData["LOCATION_DISTANSE_FILTER"] as? Double ?? 1.0
+        LocationConfig.shared.LOCATION_UPDATES_TIME = jsonData["LOCATION_UPDATES_TIME"] as? Double ?? LOCATION_UPDATES_TIME
+        LocationConfig.shared.LOCATION_DISTANSE_FILTER = jsonData["LOCATION_DISTANSE_FILTER"] as? Double ?? LOCATION_DISTANSE_FILTER
     }
 }

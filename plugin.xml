@@ -41,6 +41,7 @@
         <source-file src="src/ios/HTTPLocationManager.swift" />
         <source-file src="src/ios/LocationConfig.swift" />
         <source-file src="src/ios/LocationManager.swift" />
+        <source-file src="src/ios/CDVBackgroundGeolocationFetch-Swift.h" />
 
         <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
         <dependency id="cordova-plugin-device" version="2.0.3"/>

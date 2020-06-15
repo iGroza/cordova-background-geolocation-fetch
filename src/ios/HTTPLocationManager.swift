@@ -23,7 +23,8 @@ class HTTPLocationManager: NSObject{
                 "coordinates": [location.coordinate.longitude, location.coordinate.latitude],
                 "longitude": location.coordinate.longitude,
                 "latitude": location.coordinate.latitude,
-                "timestamp": location.timestamp.debugDescription
+                "timestamp": location.timestamp.debugDescription,
+                "accuracy": location.horizontalAccuracy,
             ],
             "extras": LocationConfig.shared.extras ?? "null"
         ]

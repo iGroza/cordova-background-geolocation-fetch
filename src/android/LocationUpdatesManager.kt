@@ -5,14 +5,10 @@ import android.location.LocationManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.transistorsoft.locationmanager.location.SingleLocationRequest
-import com.transistorsoft.locationmanager.location.SingleLocationRequest.getPendingIntent
 import android.app.PendingIntent
 
 import android.content.Intent
-
-
-
+import android.util.Log
 
 
 class LocationUpdatesManager(val context: Context) {
@@ -20,7 +16,8 @@ class LocationUpdatesManager(val context: Context) {
     private var fusedLocationProviderClient: FusedLocationProviderClient
     private var locationRequest: LocationRequest
 
-    private val UPDATE_INTERVAL: Long = 10000 // Every 5 seconds.
+    private val UPDATE_INTERVAL = 10000L // Every 5 seconds.
+    private val TAG = "LocationManager"
 
     /**
      * The fastest rate for active location updates. Updates will never be more frequent
@@ -57,8 +54,8 @@ class LocationUpdatesManager(val context: Context) {
         try {
             Log.i(TAG, "Starting location updates")
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, getPendingIntent())
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_INTERVAL, 1, getPendingIntent())
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_INTERVAL, 1, getPendingIntent())
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_INTERVAL, 1f, getPendingIntent())
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_INTERVAL, 1f, getPendingIntent())
         } catch (e: java.lang.SecurityException) {
             e.printStackTrace()
         }
@@ -70,6 +67,10 @@ class LocationUpdatesManager(val context: Context) {
         locationManager.removeUpdates(getPendingIntent());
     }
 
+    fun postCurrentLocation(){
+
+    }
+
     private fun getPendingIntent(): PendingIntent? {
         // Note: for apps targeting API level 25 ("Nougat") or lower, either
         // PendingIntent.getService() or PendingIntent.getBroadcast() may be used when requesting
@@ -77,8 +78,8 @@ class LocationUpdatesManager(val context: Context) {
         // PendingIntent.getBroadcast() should be used. This is due to the limits placed on services
         // started in the background in "O".
 
-        val intent: Intent? = Intent(this, LocationUpdatesBroadcastReceiver::class.java)
-        intent.setAction(LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES)
-        return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val intent: Intent? = Intent(context, LocationUpdatesBroadcastReceiver::class.java)
+        intent?.setAction(LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES)
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 }

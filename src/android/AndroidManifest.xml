@@ -15,17 +15,9 @@
 
     <application>
 
-        <service android:name=".TrackingManager" android:enabled="true" android:exported="true">
+        <receiver android:name="loc.LocationUpdatesBroadcastReceiver" android:exported="true">
             <intent-filter>
-                <action android:name="ru.nsstms.wetwars.location.tracking" />
-            </intent-filter>
-        </service>
-
-        <service android:name="ru.nsstms.wetwars.location.LocationUpdatesIntentService" android:exported="false" />
-
-        <receiver android:name="ru.nsstms.wetwars.location.LocationUpdatesBroadcastReceiver" android:exported="true">
-            <intent-filter>
-                <action android:name="ru.nsstms.wetwars.location.LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES" />
+                <action android:name="loc.LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

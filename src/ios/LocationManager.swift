@@ -22,6 +22,7 @@ class LocationManager: NSObject {
         self.mLocationManager?.delegate = self
         self.mLocationManager?.distanceFilter =  LocationConfig.shared.LOCATION_DISTANSE_FILTER
         self.mLocationManager?.allowsBackgroundLocationUpdates = true
+        self.mLocationManager?.desiredAccuracy = kCLLocationAccuracyBestForNavigation
     }
     
     func requestAlwaysAuthorization(_ authorizationCallback: @escaping (_ state: String) -> Void){
@@ -31,15 +32,29 @@ class LocationManager: NSObject {
     }
     
     func startTracking(){
+        let status = CLLocationManager.authorizationStatus()
+        guard status == .authorizedAlways || status == .authorizedWhenInUse else {
+            return
+        }
         self.mLocationManager!.startUpdatingLocation()
+        
     }
     
     func stopTracking(){
+        let status = CLLocationManager.authorizationStatus()
+        guard status == .authorizedAlways || status == .authorizedWhenInUse else {
+            return
+        }
         self.mLocationManager!.stopUpdatingLocation()
     }
     
     func postCurrentLocation() {
+        let status = CLLocationManager.authorizationStatus()
+        guard status == .authorizedAlways || status == .authorizedWhenInUse else {
+            return
+        }
         HTTPLocationManager.postLocation(location: (mLocationManager?.location)!)
+        
     }
 }
 
@@ -76,4 +91,3 @@ extension LocationManager: CLLocationManagerDelegate {
         }
     }
 }
-

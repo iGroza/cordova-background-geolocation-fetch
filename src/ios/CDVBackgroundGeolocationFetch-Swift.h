@@ -12,4 +12,5 @@
 -(void)startTracking:(CDVInvokedUrlCommand*)command;
 -(void)stopTracking:(CDVInvokedUrlCommand*)command;
 -(void)postCurrentLocation:(CDVInvokedUrlCommand*)command;
+-(void)postPushResult:(NSString*)messageId;
 @end

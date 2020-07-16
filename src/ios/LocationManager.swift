@@ -23,6 +23,9 @@ class LocationManager: NSObject {
         self.mLocationManager?.distanceFilter =  LocationConfig.shared.LOCATION_DISTANSE_FILTER
         self.mLocationManager?.allowsBackgroundLocationUpdates = true
         self.mLocationManager?.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+//        self.mLocationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        self.mLocationManager?.pausesLocationUpdatesAutomatically = false
+        self.mLocationManager?.activityType = CLActivityType.other
     }
     
     func requestAlwaysAuthorization(_ authorizationCallback: @escaping (_ state: String) -> Void){
@@ -53,8 +56,12 @@ class LocationManager: NSObject {
         guard status == .authorizedAlways || status == .authorizedWhenInUse else {
             return
         }
-        HTTPLocationManager.postLocation(location: (mLocationManager?.location)!)
         
+            
+        HTTPLocationManager.postLocation(location: (mLocationManager?.location)!)
+        if mLocationManager!.location!.horizontalAccuracy > 1000 {
+            replaceLocationManager()
+        }
     }
 }
 
@@ -84,10 +91,22 @@ extension LocationManager: CLLocationManagerDelegate {
         guard let location = locations.first else {
             return
         }
-        
+               
         if lastUptateLocation.addingTimeInterval(LocationConfig.shared.LOCATION_UPDATES_TIME) < Date()  {
             HTTPLocationManager.postLocation(location: location)
             lastUptateLocation = Date()
         }
+        
+        if location.horizontalAccuracy > 1000 {
+            return replaceLocationManager()
+        }
+    }
+    
+    func replaceLocationManager(){
+        print("Accuracy > 1000 replace CLLocationManager")
+        stopTracking()
+        mLocationManager = CLLocationManager()
+        configureLocationManager()
+        startTracking()
     }
 }

@@ -33,11 +33,17 @@ import Foundation
     
     @objc(startTracking:)
     func startTracking(command: CDVInvokedUrlCommand) {
+        if self.locationManager == nil {
+            self.locationManager  = LocationManager()
+        }
         self.locationManager!.startTracking()
     }
     
     @objc(stopTracking:)
     func stopTracking(command: CDVInvokedUrlCommand) {
+        if self.locationManager == nil {
+            self.locationManager  = LocationManager()
+        }
         locationManager!.startTracking()
     }
     
@@ -48,4 +54,12 @@ import Foundation
         }
         locationManager!.postCurrentLocation()
     }
+    
+    @objc(postPushResult:)
+      func postPushResult(messageId: NSString) {
+          if self.locationManager == nil {
+              self.locationManager  = LocationManager()
+          }
+          HTTPLocationManager.pushResult(messageId)
+      }
 }
